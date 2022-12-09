@@ -5,6 +5,9 @@ const app = express();
 // Using Router to take care of all paths
 app.use('/', require("./routes"));
 
+// Set up view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 app.listen(port, (err) => {
     if(err){
