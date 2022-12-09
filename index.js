@@ -1,6 +1,10 @@
 const express = require("express");
 const port = 8000;
 const app = express();
+const expressLayouts = require('express-ejs-layouts');
+
+// Needs to be placed before routes because we need to tell that whichever the views are going to be render belongs to some layout
+app.use(expressLayouts);
 
 // Using Router to take care of all paths
 app.use('/', require("./routes"));
