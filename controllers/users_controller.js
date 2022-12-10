@@ -8,7 +8,7 @@ module.exports.profile = function (req, res) {
 };
 
 module.exports.sign_in = function (req, res) {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
 
@@ -18,7 +18,7 @@ module.exports.sign_in = function (req, res) {
 };
 
 module.exports.sign_up = (req, res) => {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
 
@@ -27,11 +27,22 @@ module.exports.sign_up = (req, res) => {
     })
 };
 
+module.exports.sign_out = (req, res) => {
+    // Function given by passport.js to kill the session
+    req.logout((err) => {
+        if (err) {
+            console.log(`Error occured while logging out ${err}`);
+            return;
+        }
+        return res.redirect('/');
+    });
+};
+
 // Get the sign up data
 module.exports.create = (req, res) => {
     if (req.body.password != req.body.confirm_password)
         return res.redirect('back');
-    
+
     User.findOne({ email: req.body.email }, (err, user) => {
         if (err) { console.log(`Error in signing up the User ${err}`); return; }
 
@@ -41,7 +52,7 @@ module.exports.create = (req, res) => {
 
                 return res.redirect('/users/signin');
             })
-        }else{
+        } else {
             res.redirect('back');
         }
     })

@@ -6,16 +6,31 @@
             </a>
         </h1>
         <span id="sign_buttons">
-            <button type="button">
-                <a class="neutral_a" href="http://localhost:8000/users/signin">
-                    Sign In
-                </a>
-            </button>
-            <button type="button">
-                <a class="neutral_a" href="http://localhost:8000/users/signup">
-                    Sign Up
-                </a>
-            </button>
+
+            <% if (locals.user) { %>
+                <button type="button">
+                    <a class="neutral_a" href="http://localhost:8000/users/profile">
+                        Profile
+                    </a>
+                </button>
+                <button type="button">
+                    <a class="neutral_a" href="http://localhost:8000/users/signout">
+                        Sign Out
+                    </a>
+                </button>
+            <% } else { %>
+                <button type="button">
+                    <a class="neutral_a" href="http://localhost:8000/users/signin">
+                        Sign In
+                    </a>
+                </button>
+                <button type="button">
+                    <a class="neutral_a" href="http://localhost:8000/users/signup">
+                        Sign Up
+                    </a>
+                </button>
+            <% } %> 
+
         </span>
     </nav>
 </header>
