@@ -27,7 +27,7 @@ passport.use(new LocalStrategy({
 // Serializing the user to decide which key is to be kept in the cookies
 passport.serializeUser((user,done)=>{
     done(null, user.id);
-})
+});
 
 // Deserializing the user from the key in the cookies
 passport.deserializeUser((id, done)=>{
@@ -39,4 +39,22 @@ passport.deserializeUser((id, done)=>{
 
         return done(null, user);
     })
-})
+});
+
+passport.checkAuthentication = function(req, res, next){
+    // If user is signed in pass on to next controller
+    if(req.isAuthenticated()){
+        return next();
+    }
+
+    // if user is not signed in
+    return res.redirect('/users/signin');
+};
+
+passport.setAuthenticatedUser = function(req, res, next){
+    if(req.isAuthenticated()){
+        // req.user is coming from the Users model, it contains the information of signed in user from the session cookie
+        // and we are sending this into locals for views
+        req.locals.user = req.user;
+    }
+};

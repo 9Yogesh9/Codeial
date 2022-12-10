@@ -42,4 +42,5 @@ module.exports.create = (req, res) => {
 // Sign in and create a session for user
 module.exports.createSession = (req, res) => {
     // Handle the data given by sign in form
+    return res.redirect('/');
 }
