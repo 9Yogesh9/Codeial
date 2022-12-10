@@ -8,12 +8,20 @@ module.exports.profile = function (req, res) {
 };
 
 module.exports.sign_in = function (req, res) {
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_signin', {
         title: "Sign In",
     })
 };
 
 module.exports.sign_up = (req, res) => {
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_signup', {
         title: "Sign Up",
     })

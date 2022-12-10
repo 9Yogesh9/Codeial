@@ -39,6 +39,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 
 // Routes must be mentioned after passport initialization
 // Using Router to take care of all paths
