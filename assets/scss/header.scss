@@ -14,8 +14,10 @@
     text-decoration: none;
 }
 
-#sign_buttons button {
-    background-color: rgb(58, 117, 236);
-    text-decoration: none;
-    border-radius: 5px;
+#sign_buttons {
+    button {
+        background-color: rgb(58, 117, 236);
+        text-decoration: none;
+        border-radius: 5px;
+    }
 }
