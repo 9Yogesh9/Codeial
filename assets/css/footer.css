@@ -1,11 +1,11 @@
-#footer_style{
-    width: 100%;
-    display: flex;
-    position: fixed;
-    bottom: 0px;
-    padding: 3px 10px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
+#footer_style {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  padding: 3px 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
 }
