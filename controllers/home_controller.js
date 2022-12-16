@@ -14,7 +14,16 @@ module.exports.home = function (req, res) {
     // })
 
     // Prepopulating the user before sending to browser
-    Post.find({}).populate('user').exec((err, posts) => {
+    Post.find({})
+    .populate('user')
+    .populate({
+            path: 'comments',
+            populate:{
+                path: 'user'
+            }
+        }
+    )
+    .exec((err, posts) => {
         if (err) { console.log(`Error in finding the posts to render : ${post}`); return; }
 
         return res.render('home', {
