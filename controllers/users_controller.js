@@ -41,6 +41,9 @@ module.exports.sign_out = (req, res) => {
             console.log(`Error occured while logging out ${err}`);
             return;
         }
+    
+        req.flash('success', "Logged out successfully");
+        
         return res.redirect('/');
     });
 };
@@ -79,6 +82,8 @@ module.exports.update = (req,res) =>{
 
 // Sign in and create a session for user
 module.exports.createSession = (req, res) => {
+    req.flash('success', "Logged in successfully");
+    
     // Handle the data given by sign in form
     return res.redirect('/');
 }
