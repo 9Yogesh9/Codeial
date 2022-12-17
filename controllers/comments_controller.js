@@ -1,28 +1,46 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
-module.exports.createComment = (req, res) => {
+module.exports.createComment = async (req, res) => {
 
-    // console.log(req.body.content , " ", req.body.post, " " , req.user._id);
-    // res.redirect('/');
+    try {
+        let post = await Post.findById(req.body.post);
 
-    Post.findById(req.body.post, (err, post) => {
         if (post) {
-            Comment.create({
+            let comment = await Comment.create({
                 content: req.body.content,
                 post: req.body.post,
                 user: req.user._id
-            }, (err, comment) => {
-                // Handle the error
+            });
 
-                // MongoDB provides the utility to fetch the id of current comment and push it in the array
-                post.comments.push(comment);
-                post.save();
+            post.comments.push(comment);
+            post.save();
 
-                res.redirect('/');
-            })
+            return res.redirect('/');
         }
-    })
+    }catch(error){
+        console.log(`Error in creating the comment ${error}`);
+        return;
+    }
+
+    // Previous CODE
+    // Post.findById(req.body.post, (err, post) => {
+    //     if (post) {
+    //         Comment.create({
+    //             content: req.body.content,
+    //             post: req.body.post,
+    //             user: req.user._id
+    //         }, (err, comment) => {
+    //             // Handle the error
+
+    //             // MongoDB provides the utility to fetch the id of current comment and push it in the array
+    //             post.comments.push(comment);
+    //             post.save();
+
+    //             res.redirect('/');
+    //         })
+    //     }
+    // })
 };
 
 module.exports.destroy_comment = (req, res) => {
