@@ -2,6 +2,22 @@ body {
     margin: 0px;
     // text-align: center;
     padding-left: 10px;
-    background-color: rgb(5, 15, 48);
+    background-color: rgb(88, 103, 151);
     color: white;
+
+    #home_container{
+        display: flex;
+    }
+
+    #feed-posts{
+        width: 70%;
+        padding: 10px;
+    }
+
+    #user-friends{
+        width: 30%;
+        height: 100%;
+        padding: 10px;
+        border-left: 1px solid orange;
+    }
 }
