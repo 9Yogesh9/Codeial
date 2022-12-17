@@ -1,8 +1,20 @@
 <link rel="stylesheet" href="/css/profile.css">
 <h1>Profile page</h1>
-<p>
-    <%= user.name %>
-</p>
-<p>
-    <%= user.email %>
-</p>
+
+<% if(user.id==profile_user.id) { %>
+    <!-- If profile matches then show the form to edit inf -->
+    <form action="/users/update/<%= profile_user.id %> " method="post">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name  %>" id="" required>
+        <input type="text" name="email" placeholder="Your Email" value="<%= profile_user.email  %>" id="" required>
+        <input type="submit" value="Update">
+    </form>
+
+    <% }else{ %>
+        <!-- else show only the profile info -->
+            <p>
+                <%= profile_user.name %>
+            </p>
+            <p>
+                <%= profile_user.email %>
+            </p>
+    <% } %>

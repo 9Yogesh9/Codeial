@@ -9,7 +9,7 @@
 
             <% if (locals.user) { %>
                 <button type="button">
-                    <a class="neutral_a" href="http://localhost:8000/users/profile">
+                    <a class="neutral_a" href="http://localhost:8000/users/profile/<%= locals.user.id %> ">
                         Profile
                     </a>
                 </button>

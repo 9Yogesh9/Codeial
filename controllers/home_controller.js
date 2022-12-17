@@ -24,12 +24,18 @@ module.exports.home = function (req, res) {
         }
     )
     .exec((err, posts) => {
-        if (err) { console.log(`Error in finding the posts to render : ${post}`); return; }
+        if (err) { console.log(`Error in finding the posts to render : ${err}`); return; }
 
-        return res.render('home', {
-            title: "Codeial | Home",
-            posts: posts
-        })
+        User.find({}, (err,users) => {
+            
+            return res.render('home', {
+                title: "Codeial | Home",
+                posts: posts,
+                all_users: users
+            })
+
+        });
+
     })
 
 }

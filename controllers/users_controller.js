@@ -2,9 +2,16 @@ const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
     // res.end("User Profile");
-    return res.render('profile', {
-        title: "User | Profile",
+
+    User.findById(req.params.id, (err,user)=>{
+        if(err){console.log(`Check users_controller : ${err}`); return;}
+
+        return res.render('profile', {
+            title: "User | Profile",
+            profile_user: user
+        })
     })
+
 };
 
 module.exports.sign_in = function (req, res) {
@@ -56,6 +63,18 @@ module.exports.create = (req, res) => {
             res.redirect('back');
         }
     })
+}
+
+// Update the data for user
+module.exports.update = (req,res) =>{
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body, (err,user)=>{
+            if(err){console.log(`Error in updating the user database : ${err}`); return;}
+            return res.redirect('back');
+        })
+    }else{
+        return res.status(401).send("Unauthorized") ;
+    }
 }
 
 // Sign in and create a session for user
