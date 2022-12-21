@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 module.exports.create_post = async function (req, res) {
 
@@ -9,14 +10,13 @@ module.exports.create_post = async function (req, res) {
             user: req.user._id
         });
 
+        let user = await User.findById(req.user._id);
+
         if (req.xhr) {
-            res.locals.flash = {
-                'success': req.flash('success'),
-                'error': req.flash('error')
-            }
             return res.status(200).json({
                 data: {
                     post: post,
+                    user_name: user['name']
                 },
                 message: "Post Created !"
             });

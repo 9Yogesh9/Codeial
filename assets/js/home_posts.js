@@ -35,8 +35,7 @@
                 url: '/posts/createposts',
                 data: newPostForm.serialize(),
                 success: (data) => {
-                    console.log(data);
-                    let newPost = newPostDom(data.data.post);
+                    let newPost = newPostDom(data.data.post, data.data.user_name);
                     $('.posts_container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button'), newPost);
                     notify('success',"Post published !");
@@ -49,7 +48,7 @@
     }
 
     // Method to create a post in DOM
-    let newPostDom = function (post) {
+    let newPostDom = function (post, user_name) {
         return $(`<li id="post-${post._id}">
                 <p>
                     <small>
@@ -58,7 +57,7 @@
 
                     ${post.content}
                     <small>
-                        ${post.user.name}
+                        ${user_name}
                     </small>
                 </p>
                 <div class="post_comments">
