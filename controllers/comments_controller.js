@@ -20,7 +20,7 @@ module.exports.createComment = async (req, res) => {
         }
     }catch(error){
         console.log(`Error in creating the comment ${error}`);
-        return;
+        return res.send("SOMETHING WENT WRONG ! check server logs");
     }
 
     // Previous CODE
