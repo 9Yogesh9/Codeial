@@ -1,5 +1,29 @@
 { //Extra bracket to preserve the scope
 
+
+    // Display notification with Noty
+    function notify(type, message){
+        if(type == 'success'){
+            new Noty({
+                theme: 'relax',
+                text: message,
+                type: "success",
+                layout: "topRight",
+                timeout: 1500
+            }).show();
+        }
+
+        if(type == 'error'){
+            new Noty({
+                theme: 'relax',
+                text: message,
+                type: "error",
+                layout: "topRight",
+                timeout: 1500
+            }).show();
+        }
+    }
+
     // Method to submit the form data for new post using AJAX
     let createPost = function () {
         let newPostForm = $('#new-post-form');
@@ -15,6 +39,7 @@
                     let newPost = newPostDom(data.data.post);
                     $('.posts_container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button'), newPost);
+                    notify('success',"Post published !");
                 },
                 error: (error) => {
                     console.log(error.responseText);
@@ -25,7 +50,6 @@
 
     // Method to create a post in DOM
     let newPostDom = function (post) {
-        console.log(post);
         return $(`<li id="post-${post._id}">
                 <p>
                     <small>
@@ -63,6 +87,7 @@
                 url: $(deleteLink).prop('href'),
                 success: (data) => {
                     $(`#post-${data.data.post_id}`).remove();
+                    notify('error', "Post and associated comments are deleted !");
                 },
                 error: (err) => {
                     console.log(err.responseText);

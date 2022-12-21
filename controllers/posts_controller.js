@@ -9,9 +9,13 @@ module.exports.create_post = async function (req, res) {
             user: req.user._id
         });
 
-        if(req.xhr){
+        if (req.xhr) {
+            res.locals.flash = {
+                'success': req.flash('success'),
+                'error': req.flash('error')
+            }
             return res.status(200).json({
-                data:{
+                data: {
                     post: post,
                 },
                 message: "Post Created !"
@@ -49,9 +53,9 @@ module.exports.destroy = async (req, res) => {
 
             await Comment.deleteMany({ post: req.params.id });
 
-            if(req.xhr){
+            if (req.xhr) {
                 return res.status(200).json({
-                    data:{
+                    data: {
                         post_id: req.params.id
                     },
                     message: "Post deleted"
