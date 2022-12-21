@@ -12,25 +12,24 @@
                 data: newPostForm.serialize(),
                 success: (data) => {
                     console.log(data);
-                    let newPost = newPostDom(data.data.post); 
+                    let newPost = newPostDom(data.data.post);
                     $('.posts_container>ul').prepend(newPost);
+                    deletePost($(' .delete-post-button'), newPost);
                 },
                 error: (error) => {
                     console.log(error.responseText);
                 }
             })
-    })
-}
+        })
+    }
 
-// Needs to called on load, to link itself to specific element
-createPost();
-
-// Method to create a post in DOM
-let newPostDom = function (post) {
-    return $(`<li id="post-${post._id}">
+    // Method to create a post in DOM
+    let newPostDom = function (post) {
+        console.log(post);
+        return $(`<li id="post-${post._id}">
                 <p>
                     <small>
-                        <a class="delete-post-button" href="/posts/destroyposts/${post.id}"> X </a>
+                        <a class="delete-post-button" href="/posts/destroyposts/${post._id}"> X </a>
                     </small>
 
                     ${post.content}
@@ -52,6 +51,35 @@ let newPostDom = function (post) {
                     </div>
                 </div>
                 </li>`)
-}
+    }
+
+    // Method to delete a post from DOM
+    let deletePost = function (deleteLink) {
+        $(deleteLink).click((e) => {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'get',
+                url: $(deleteLink).prop('href'),
+                success: (data) => {
+                    $(`#post-${data.data.post_id}`).remove();
+                },
+                error: (err) => {
+                    console.log(err.responseText);
+                }
+            })
+        })
+    }
+
+    // Linking deletePost to all preloaded
+    let link_del_ajax = () => {
+        let grab_posts = document.getElementsByClassName('delete-post-button');
+        for (a of grab_posts)
+            deletePost(a);
+    }
+    link_del_ajax();
+
+    // Needs to called on load, to link itself to specific element
+    createPost();
 
 }

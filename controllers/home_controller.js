@@ -6,6 +6,7 @@ module.exports.home = async function (req, res) {
     // version 2
     try {
         let posts = await Post.find({})
+            .sort('-createdAt')
             .populate('user')
             .populate({
                 path: 'comments',
@@ -27,7 +28,7 @@ module.exports.home = async function (req, res) {
 
         console.log(`Error in finding the posts to render : ${err}`);
         return;
-        
+
     }
 
 
