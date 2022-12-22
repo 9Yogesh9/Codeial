@@ -2,8 +2,8 @@
 
 
     // Display notification with Noty
-    function notify(type, message){
-        if(type == 'success'){
+    function notify(type, message) {
+        if (type == 'success') {
             new Noty({
                 theme: 'relax',
                 text: message,
@@ -13,7 +13,7 @@
             }).show();
         }
 
-        if(type == 'error'){
+        if (type == 'error') {
             new Noty({
                 theme: 'relax',
                 text: message,
@@ -37,14 +37,53 @@
                 success: (data) => {
                     let newPost = newPostDom(data.data.post, data.data.user_name);
                     $('.posts_container>ul').prepend(newPost);
+                    newComment(data.data.post._id);
                     deletePost($(' .delete-post-button'), newPost);
-                    notify('success',"Post published !");
+                    notify('success', "Post published !");
                 },
                 error: (error) => {
                     console.log(error.responseText);
                 }
             })
         })
+    }
+
+    // Link comment submit event 
+    let newComment = (postID) => {
+        let newCommentForm = $(`#new_comment_form_${postID}`);
+
+        newCommentForm.submit((e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '/comments/createComment',
+                data: newCommentForm.serialize(),
+                success: (data) => { 
+                    console.log(data);
+                    let newComment = newCommentDom(data.data.comment._id, data.data.comment.content, data.data.user_name);
+                    $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
+                    notify('success', "Comment created !");
+                },
+                error: (error) => { console.log(error.responseText); }
+            })
+        })
+
+    }
+
+    // Method to create a comment in DOM
+    let newCommentDom = function (commentID, content, username) {
+        return $(`<li id="comment-${commentID}">
+                    <p>
+                        <small>
+                            <a href="/comments/destroyComment/${commentID}"> X </a>
+                        </small>
+                            ${content} 
+                        <br>
+                        <small>
+                            ${username}
+                        </small>
+                    </p>
+                </li>`)
     }
 
     // Method to create a post in DOM
@@ -61,7 +100,7 @@
                     </small>
                 </p>
                 <div class="post_comments">
-                        <form action="/comments/createComment" class="new-comment-form" method="post">
+                        <form action="/comments/createComment" id="new_comment_form_${post._id}"  class="new_comment_form" method="post">
                             <input type="text" name="content" id="" placeholder="Type here to add comment..." required>
                             <input type="hidden" name="post" value="${post._id}">
                             <input type="submit" value="Add Comment">

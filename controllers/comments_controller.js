@@ -1,5 +1,6 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 module.exports.createComment = async (req, res) => {
 
@@ -16,9 +17,21 @@ module.exports.createComment = async (req, res) => {
             post.comments.push(comment);
             post.save();
 
+            let user = await User.findById(req.user._id);
+
+            if (req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        comment: comment,
+                        user_name: user['name']
+                    },
+                    message: "Comment Created !"
+                });
+            }
+
             return res.redirect('/');
         }
-    }catch(error){
+    } catch (error) {
         console.log(`Error in creating the comment ${error}`);
         return res.send("SOMETHING WENT WRONG ! check server logs");
     }

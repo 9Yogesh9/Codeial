@@ -13,7 +13,7 @@
     <div class="post_comments">
         <% if(locals.user){ %>
             <!-- class="new-comment-form"  -->
-            <form action="/comments/createComment" method="post">
+            <form action="/comments/createComment" id="new_comment_<%= post._id %>" method="post">
                 <input type="text" name="content" id="" placeholder="Type here to add comment..." required>
                 <input type="hidden" name="post" value="<%= post._id %>">
                 <input type="submit" value="Add Comment">
