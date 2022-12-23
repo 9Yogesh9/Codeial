@@ -47,7 +47,7 @@
             })
         })
     }
-
+    
     // Link comment submit event 
     let newComment = (postID) => {
         let newCommentForm = $(`#new_comment_form_${postID}`);
